@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -76,10 +77,12 @@ public class ImageUtils {
 				Enumeration<InetAddress> addrs = nic.getInetAddresses();
 				while (addrs.hasMoreElements()) {
 					InetAddress addr = addrs.nextElement();
-					if(false==addr.isLoopbackAddress()) {
-						return addr;
+					if (addr instanceof Inet4Address) {
+						if (false == addr.isLoopbackAddress()) {
+							return addr;
+						}
 					}
-					
+
 				}
 			}
 		} catch (SocketException e) {
